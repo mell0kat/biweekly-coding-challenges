@@ -1,3 +1,3 @@
 # Coding Practice Problems
 
-![Stars](img/adventOfCode?raw=true "Stars")`
+![Stars](img/adventOfCode.png?raw=true "Stars")
