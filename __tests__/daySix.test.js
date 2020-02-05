@@ -47,12 +47,19 @@ describe('Part One', () => {
   describe('countOrbitsForPlanetarySystem', () => {
     test('should handle all direct orbits', () => {
       let input = `
-    A)B
-    A)C
-    A)D`;
+      A)B
+      A)C
+      A)D`;
       expect(countOrbitsForPlanetarySystem(input)).toEqual(3)
     });
 
+    test('should handle a mix of outer and inner', () => {
+      const input = `COM)B
+      B)C
+      C)D
+      `
+      expect(countOrbitsForPlanetarySystem(input)).toEqual(6)
+    })
     test('should handle a mix of outer and inner', () => {
       let input = `COM)B
       B)C
