@@ -1,36 +1,55 @@
-const map = require('lodash/map')
-const sumBy = require('lodash/sumBy')
+const _ = require('lodash');
+class Planet {
 
-const getOrbitEntities = (outerInner) => outerInner.split(')')
+  constructor(name, orbits) {
+    this.name = name;
+    this.orbits = orbits
+  }
 
-const countOrbitsForPlanetarySystem = (planetarySystem) => {
-
-  const orbits = planetarySystem.trim().split('\n').map(o => o.trim())
-
-  return sumBy(orbits, o => {
-    const [inner, outer] = getOrbitEntities(o)
-    return countDirectAndIndirectOrbitsForEntity(outer, orbits)
-  })
-}
-
-const memo = {
-
-}
-
-const countDirectAndIndirectOrbitsForEntity = (entity, planetarySystem) => {
-  return planetarySystem.reduce((orbitCount, o) => {
-    const [inner, outer] = getOrbitEntities(o)
-
-    if (outer === entity) {
-      memo[inner] = memo[inner] || countDirectAndIndirectOrbitsForEntity(inner, planetarySystem)
-      return orbitCount + 1 + memo[inner]
+  countOrbits() {
+    if (!this.orbits) {
+      return 0
     } else {
-      return orbitCount
+      return 1 + this.orbits.countOrbits()
     }
-  }, 0)
+  }
+}
+
+class PlanetarySystem {
+  constructor() {
+    this.planets = [];
+  }
+  buildSystem(input) {
+    _.forEach(input, innerOuter => {
+      const [inner, outer] = innerOuter.split(')')
+      let innerPlanet = this.planets.filter(p => p.name === inner)[0]
+
+      if (!innerPlanet) {
+        innerPlanet = new Planet(inner)
+        this.planets.push(innerPlanet)
+      }
+
+      const outerPlanet = new Planet(outer, innerPlanet);
+      this.planets.push(outerPlanet)
+    })
+  }
+  countOrbits() {
+    const counts = _.map(this.planets, p => p.countOrbits())
+    return _.sum(counts)
+  }
+}
+
+const input = ['A)B', 'B)C', 'C)D'];
+
+
+const countOrbits = (inputStr) => {
+  const innerOuterItems = _.map(inputStr.trim().split('\n'), io => io.trim())
+  const ps = new PlanetarySystem()
+  ps.buildSystem(innerOuterItems)
+  console.log(_.map(_.sortBy(ps.planets, p => p.name), p => p.name))
+  return ps.countOrbits()
 }
 
 module.exports = {
-  countOrbitsForPlanetarySystem,
-  countDirectAndIndirectOrbitsForEntity
-}
+  countOrbits
+};
