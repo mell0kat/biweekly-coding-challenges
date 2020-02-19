@@ -1,42 +1,31 @@
 const _ = require('lodash');
-const fs = require('fs');
-const path = require('path');
-
-const puzzleInput = fs.readFileSync(path.join(__dirname, '/puzzleInput.txt'), 'utf8')
 
 const countLayers = (imageCode, width, height) => {
   return imageCode.length / (width * height)
 }
 
-const countZerosInLayer = (imageLayer) => {
-  const zeroCount = _.countBy(imageLayer.split(''), d => d === '0')
-  console.log(imageLayer, zeroCount)
-  return zeroCount.true
+const countDigitsInLayer = (imageLayer, digit) => {
+  const digitCount = _.countBy(imageLayer.split(''), d => d === digit.toString())
+  return digitCount.true || 0
 }
 
 const getLayers = (imageLayer, layerSize) => {
-  console.log(imageLayer)
   const imageLayerArr = imageLayer.split('')
-  const layers = []
-  console.log('layers', layers)
-  while (imageLayerArr.length > 0) {
-    chunk = imageLayerArr.splice(0, layerSize)
-    layers.push(chunk.join(''))
-  }
-  return layers
+  return _.map(_.chunk(imageLayerArr, layerSize), ch => ch.join(''))
 }
-
 
 const checkImageForCorruption = (imageCode, width, height) => {
   const layers = getLayers(imageCode, width * height)
 
-  return _.minBy(layers, countZerosInLayer)
+  const layerwithFewestZeros = _.minBy(layers, l => countDigitsInLayer(l, 0))
+  const oneDigitsCount = countDigitsInLayer(layerwithFewestZeros, 1)
+  const twoDigitsCount = countDigitsInLayer(layerwithFewestZeros, 2)
+  return oneDigitsCount * twoDigitsCount
 }
-
 
 module.exports = {
   countLayers,
-  countZerosInLayer,
+  countDigitsInLayer,
   getLayers,
   checkImageForCorruption
 }
