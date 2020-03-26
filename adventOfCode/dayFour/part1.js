@@ -38,6 +38,8 @@ const checkForNotDecreasing = (str) => {
   })
   return config.notDecreasing
 }
+// check for 2 of something -- Count
+// if it's monotonic, then count of two means they are in a row
 
 const passwordChecker = (password) => {
 

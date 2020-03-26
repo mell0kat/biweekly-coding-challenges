@@ -24,7 +24,7 @@ const decodeImage = (imageCode, width, height) => {
     }
     image.push(getPixel(pixels))
   }
-  return _.map(_.chunk(image, width), c => c.join('')).join('\n').replace(/0/g, '#').replace(/1/g, '.')
+  return _.map(_.chunk(image, width), c => c.join('')).join('\n').replace(/0/g, ' ').replace(/1/g, '\u2588')
 }
 
 module.exports = {
