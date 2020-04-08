@@ -19,9 +19,9 @@ const processInput = (str) => {
 
 const processCondition = (condition, idx, registers) => {
   const [register, operator, num] = condition.split(' ')
-  if (idx === 0) {
-    registers[register] = 0
-  }
+
+  registers[register] = registers[register] || 0
+
   return eval(`registers[register]${operator}num`)
 }
 
@@ -29,7 +29,7 @@ const processCommand = (str, idx, registers) => {
 
   const [part1, condition] = str.split(' if ')
   const [register, direction, amount] = part1.split(' ')
-
+  console.log('process cond', processCondition(condition, idx, registers))
   return {
     register,
     operator: direction === 'inc' ? '+' : '-',
@@ -48,6 +48,7 @@ const doTheThing = (str) => {
       amount,
       condition
     } = processCommand(c, i, registers)
+
     if (!registers[register]) {
       registers[register] = 0
     }
@@ -58,8 +59,11 @@ const doTheThing = (str) => {
       } else {
         toEvaluate = `${registers[register]}${operator}${amount}`
       }
+      console.log(register, toEvaluate)
       registers[register] = eval(toEvaluate)
     }
+
+    console.log(registers)
 
   })
   return _.max(_.values(registers))
