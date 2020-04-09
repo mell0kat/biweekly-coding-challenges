@@ -1,16 +1,12 @@
 /*
 
-1. Initialize a count of programs (that are in the group containing 0) 
-2. Visit each connection
-3. See if right hand side is connected to 0
-4. If so, increment count
+1. Translate input into object with this shape {2: [0, 3, 4]}
+2. Starting with 0,
+3. Use a stack & while loop to visit every connected program
+4. Keep track of visited programs & return the count
 
 */
 const _ = require('lodash');
-
-const areConnected = (connections, a, b) => {
-  _.some()
-}
 
 const countPrograms = (input, programToMatch) => {
   const toVisit = [programToMatch];
