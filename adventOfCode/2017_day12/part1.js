@@ -1,9 +1,14 @@
 /*
 
+Plan:
 1. Translate input into object with this shape {2: [0, 3, 4]}
 2. Starting with 0,
 3. Use a stack & while loop to visit every connected program
 4. Keep track of visited programs & return the count
+
+
+Notes:
+* Could have used Set instead of { visited: true } map
 
 */
 const _ = require('lodash');
