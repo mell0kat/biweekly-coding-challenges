@@ -14,8 +14,8 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@types/jest": "^25.1.1",
-    "@types/node": "^13.5.3",
-    "jest": "^25.0.0"
+    "@types/jest": "^25.2.3",
+    "@types/node": "^13.13.12",
+    "jest": "^25.5.4"
   }
 }
