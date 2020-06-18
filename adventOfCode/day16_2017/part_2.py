@@ -1,4 +1,6 @@
 # How do I just import DancingPrograms from part_1 code?
+from day16_2017.part_1 import DancingPrograms
+
 class DancingPrograms:
 
     def __init__(self, programs):
